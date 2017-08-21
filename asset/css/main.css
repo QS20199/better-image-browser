@@ -1,0 +1,43 @@
+body {
+	background-color: #22292C !important;
+	overflow: hidden;
+	text-align: center;
+}
+
+body:after {
+	opacity: 0.2;
+	background: url('chrome-extension://__MSG_@@extension_id__/asset/img/stars-lg.svg') center/1140px 622px repeat;
+	animation: pulse 8s ease infinite;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0%;
+	top: 0%;
+	content: '';
+	display: block;
+	z-index: -1;
+	transform-origin: center;
+}
+
+body:before {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0%;
+	top: 0%;
+	content: '';
+	background: url('chrome-extension://__MSG_@@extension_id__/asset/img/stars-sm.svg') center/1140px 622px repeat;
+	display: block;
+	z-index: -1;
+	transform-origin: center;
+	opacity: 0.2;
+	animation: slowTurn 160s ease infinite;
+}
+
+img {
+	transition: 0.25s;
+	transition-timing-function: ease;
+	cursor: -webkit-grab !important;
+	display: block;
+	margin: auto auto;
+}

@@ -1,0 +1,22 @@
+{
+	"version": "2.0.2",
+	"compilerOptions": {
+		"lib": ["es6", "dom"],
+		"target": "es6",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"sourceMap": true,
+		"outDir": "dist/",
+		"allowJs": true,
+		"declaration": false,
+		"watch": true
+	},
+	"exclude": [
+		"node_modules"
+	],
+	"include": [
+		"src/**/*"
+	]
+}

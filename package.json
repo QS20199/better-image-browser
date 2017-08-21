@@ -1,0 +1,19 @@
+{
+  "name": "better-image-browser",
+  "version": "1.0.0",
+  "description": "a chrome extension to browse image better",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QS20199/better-image-browser.git"
+  },
+  "author": "qsqiu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/QS20199/better-image-browser/issues"
+  },
+  "homepage": "https://github.com/QS20199/better-image-browser#readme"
+}
