@@ -36,7 +36,7 @@ body:before {
 
 img {
 	transition: 0.25s;
-	transition-timing-function: ease;
+	transition-timing-function: linear;
 	cursor: -webkit-grab !important;
 	display: block;
 	margin: auto auto;
