@@ -6,6 +6,11 @@
 	"browser_action": {
 		"default_icon": "./asset/img/icon_128.png"
 	},
+	"icons": {
+		"128": "./asset/img/icon_128.png",
+		"48": "./asset/img/icon_48.png",
+		"16": "./asset/img/icon_16.png"
+	},
 	"content_scripts": [
 		{
 			"matches": [
