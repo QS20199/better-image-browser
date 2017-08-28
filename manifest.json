@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-	"name": "better-image-browser",
+	"name": "Better Image Browser",
 	"description": "a chrome extension to browse image better",
 	"version": "1.0",
 	"browser_action": {
