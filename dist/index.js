@@ -21,7 +21,7 @@ function getPx(str) {
     return Number(str.split('px')[0]);
 }
 let shouldMove = false, deltaX = 0, deltaY = 0, wheelCount = 0, lastInnerX = 0, lastInnerY = 0;
-let timer, timerWheel;
+let timerClick, timerWheel;
 document.addEventListener('mousewheel', e => {
     let oldVal = {
         width: getPx(img.style.width),
@@ -72,7 +72,7 @@ document.addEventListener('mousedown', e => {
     e.stopPropagation();
     shouldMove = true;
     img.style.transition = '0s';
-    timer = setInterval(() => {
+    timerClick = setInterval(() => {
         let m = img.style.transform.match(/translate\((.*)\)/);
         let x, y;
         if (m && m[1]) {

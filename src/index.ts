@@ -30,7 +30,7 @@ let shouldMove = false,
 	wheelCount = 0,
 	lastInnerX = 0,
 	lastInnerY = 0;
-let timer, timerWheel;
+let timerClick, timerWheel;
 
 document.addEventListener('mousewheel', e => {
 	let oldVal: any = {
@@ -53,7 +53,6 @@ document.addEventListener('mousewheel', e => {
 		newVal.height = oldVal.height / STEP;
 	}
 
-
 	let marginLeft = img.offsetLeft,
 		marginTop = img.offsetTop;
 
@@ -64,7 +63,6 @@ document.addEventListener('mousewheel', e => {
 	// 鼠标所在到图片两边的距离
 	let innerX = e.clientX - offsetX,
 		innerY = e.clientY - offsetY;
-
 
 	// 鼠标不在图片内, 不进行缩放
 	if (innerX <= 0 || innerY <= 0 || innerX >= img.width || innerY >= img.height) {
@@ -86,9 +84,12 @@ document.addEventListener('mousewheel', e => {
 	img.style.top = newVal.top;
 });
 
+
+
 document.addEventListener('click', e => {
 	e.stopPropagation();
 }, true);
+
 
 
 document.addEventListener('mousedown', e => {
@@ -96,7 +97,7 @@ document.addEventListener('mousedown', e => {
 	shouldMove = true;
 	img.style.transition = '0s';
 
-	timer = setInterval(() => {
+	timerClick = setInterval(() => {
 		let m = img.style.transform.match(/translate\((.*)\)/);
 		let x, y;
 		if (m && m[1]) {
@@ -111,11 +112,15 @@ document.addEventListener('mousedown', e => {
 	}, 16);
 }, true);
 
+
+
 document.addEventListener('mouseup', e => {
 	e.stopPropagation();
 	shouldMove = false;
 	img.style.transition = '';
 }, true);
+
+
 
 document.addEventListener('mousemove', e => {
 	e.stopPropagation();
