@@ -36,10 +36,9 @@ document.addEventListener('mousewheel', e => {
     let offsetX = img.offsetLeft + oldVal.tX, offsetY = img.offsetTop + oldVal.tY;
     // 鼠标所在到图片两边的距离
     let innerX = e.clientX - offsetX, innerY = e.clientY - offsetY;
-    // 鼠标不在图片内, 缩放中心不变
+    // 鼠标不在图片内, 不进行缩放
     if (innerX <= 0 || innerY <= 0 || innerX >= img.width || innerY >= img.height) {
-        newVal.left = oldVal.left;
-        newVal.top = oldVal.top;
+        return;
     }
     else {
         // 鼠标在图片内, 缩放中心通过left和top来改变

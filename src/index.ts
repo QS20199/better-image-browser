@@ -9,6 +9,8 @@ img.draggable = false;
 img.style.width = img.width + 'px';
 img.style.height = img.height + 'px';
 img.id = 'img';
+
+
 function getPx(str) {
 	return Number(str.split('px')[0]);
 }
@@ -55,10 +57,9 @@ document.addEventListener('mousewheel', e => {
 		innerY = e.clientY - offsetY;
 
 
-	// 鼠标不在图片内, 缩放中心不变
+	// 鼠标不在图片内, 不进行缩放
 	if (innerX <= 0 || innerY <= 0 || innerX >= img.width || innerY >= img.height) {
-		newVal.left = oldVal.left;
-		newVal.top = oldVal.top;
+		return;
 	} else {
 		// 鼠标在图片内, 缩放中心通过left和top来改变
 		if (e.deltaY < 0) { // 放大
