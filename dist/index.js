@@ -2,8 +2,8 @@ const STEP = 1.1;
 // const MIN_SCALE = 1 / Math.pow(STEP, 5);
 let img = document.querySelector('img');
 img.style.transform = 'translate(0px, 0px)';
-img.style.left = '0px';
-img.style.top = '0px';
+img.style.left = document.body.offsetWidth / 2 - img.width / 2 + 'px';
+img.style.top = document.body.offsetHeight / 2 - img.height / 2 + 'px';
 img.draggable = false;
 img.id = 'img';
 // 先让图片渲染足够大, 让raster主动预先进行image decode, 再经过定时器调整回正常大小.

@@ -3,8 +3,8 @@ const STEP = 1.1;
 
 let img = document.querySelector('img');
 img.style.transform = 'translate(0px, 0px)';
-img.style.left = '0px';
-img.style.top = '0px';
+img.style.left = document.body.offsetWidth / 2 - img.width / 2 + 'px';
+img.style.top = document.body.offsetHeight / 2 - img.height / 2 + 'px';
 img.draggable = false;
 img.id = 'img';
 
