@@ -1,57 +1,61 @@
-const STEP = 1.25;
+const STEP = 1.1;
 // const MIN_SCALE = 1 / Math.pow(STEP, 5);
 let img = document.querySelector('img');
 img.style.transform = 'translate(0px, 0px)';
+img.style.left = '0px';
+img.style.top = '0px';
 img.draggable = false;
 img.style.width = img.width + 'px';
 img.style.height = img.height + 'px';
+img.id = 'img';
 function getPx(str) {
-    return str.split('px')[0];
+    return Number(str.split('px')[0]);
 }
-let shouldMove = false, deltaX = 0, deltaY = 0;
-let timer;
-// todo: 重新设计方案
-// 关键步骤
-// 1.确定缩放重心
-// 2.确定4个关键值
+let shouldMove = false, deltaX = 0, deltaY = 0, wheelCount = 0, lastInnerX = 0, lastInnerY = 0;
+let timer, timerWheel;
 document.addEventListener('mousewheel', e => {
     let oldVal = {
         width: getPx(img.style.width),
         height: getPx(img.style.height),
+        left: getPx(img.style.left),
+        top: getPx(img.style.top)
     }, newVal = {};
     let transformStr = img.style.transform;
     [, oldVal.tX, oldVal.tY] = transformStr.match(/translate\((.*?)px, (.*?)px\)/).map(v => Number(v));
     // 求新的缩放值
     if (e.deltaY < 0) {
-        // newVal.scale = oldVal.scale * STEP;
         newVal.width = oldVal.width * STEP;
         newVal.height = oldVal.height * STEP;
     }
     else {
-        // newVal.scale = oldVal.scale / STEP;
         newVal.width = oldVal.width / STEP;
         newVal.height = oldVal.height / STEP;
-        // if (newVal.scale < MIN_SCALE) newVal.scale = MIN_SCALE;
     }
     let marginLeft = img.offsetLeft, marginTop = img.offsetTop;
     // 实际上图片两边到left top的距离
     let offsetX = img.offsetLeft + oldVal.tX, offsetY = img.offsetTop + oldVal.tY;
     // 鼠标所在到图片两边的距离
     let innerX = e.clientX - offsetX, innerY = e.clientY - offsetY;
-    console.log(innerX, innerY);
-    // 鼠标不在图片内, 位移量不变
+    // 鼠标不在图片内, 缩放中心不变
     if (innerX <= 0 || innerY <= 0 || innerX >= img.width || innerY >= img.height) {
-        newVal.tX = oldVal.tX;
-        newVal.tY = oldVal.tY;
+        newVal.left = oldVal.left;
+        newVal.top = oldVal.top;
     }
     else {
-        let sign = e.deltaY < 0 ? 1 : -1;
-        newVal.tX = oldVal.tX + sign * ((img.width / 2) - innerX) * (STEP - 1);
-        newVal.tY = oldVal.tY + sign * ((img.height / 2) - innerY) * (STEP - 1);
+        // 鼠标在图片内, 缩放中心通过left和top来改变
+        if (e.deltaY < 0) {
+            newVal.left = oldVal.left - innerX * (STEP - 1);
+            newVal.top = oldVal.top - innerY * (STEP - 1);
+        }
+        else {
+            newVal.left = oldVal.left + innerX * (1 - 1 / STEP);
+            newVal.top = oldVal.top + innerY * (1 - 1 / STEP);
+        }
     }
-    img.style.transform = `translate(${newVal.tX}px, ${newVal.tY}px)`;
     img.style.width = newVal.width;
     img.style.height = newVal.height;
+    img.style.left = newVal.left;
+    img.style.top = newVal.top;
 });
 document.addEventListener('click', e => {
     e.stopPropagation();
