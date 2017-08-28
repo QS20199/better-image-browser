@@ -6,10 +6,19 @@ img.style.transform = 'translate(0px, 0px)';
 img.style.left = '0px';
 img.style.top = '0px';
 img.draggable = false;
-img.style.width = img.width + 'px';
-img.style.height = img.height + 'px';
 img.id = 'img';
 
+// 先让图片渲染足够大, 让raster主动预先进行image decode, 再经过定时器调整回正常大小.
+// 如果不进行预先的decode, 用户缩放时才会进行decode, 可能会需要数百毫秒, 造成卡顿
+let _width = img.width;
+let _height = img.height;
+img.style.width = '30000px';
+img.style.height = '30000px';
+img.style.display = 'block';
+setTimeout(function () {
+	img.style.width = _width + 'px';
+	img.style.height = _height + 'px';
+}, 0);
 
 function getPx(str) {
 	return Number(str.split('px')[0]);
