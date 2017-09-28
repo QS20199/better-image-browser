@@ -23,6 +23,12 @@
 			]
 		}
 	],
+	"background": {
+		"scripts": [
+			"./dist/eventPage.js"
+		],
+		"persistent": false
+	},
 	"permissions": [
 		"activeTab",
 		"storage",

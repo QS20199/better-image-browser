@@ -131,6 +131,15 @@ function run() {
 		deltaY += e.movementY;
 	}, true)
 
+
+
+	// 双击切换全屏
+	document.addEventListener('dblclick', e => {
+		chrome.runtime.sendMessage({
+			action: 'toggleFullScreen'
+		});
+	});
+
 	console.log('better image browser start')
 }
 
