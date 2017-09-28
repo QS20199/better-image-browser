@@ -1,25 +1,24 @@
-function run() {
+async function run() {
 	const STEP = 1.2;
 
 	addCss();
 
 	let img = document.querySelector('img');
+	let [realWidth, realHeight] = await getImgRealSize(img.src);
 	img.style.transform = 'translate(0px, 0px)';
-	img.style.left = document.body.offsetWidth / 2 - img.width / 2 + 'px';
-	img.style.top = document.body.offsetHeight / 2 - img.height / 2 + 'px';
+	img.style.left = document.body.offsetWidth / 2 - realWidth / 2 + 'px';
+	img.style.top = document.body.offsetHeight / 2 - realHeight / 2 + 'px';
 	img.draggable = false;
 	img.id = 'img';
 
 	// 先让图片渲染足够大, 让raster主动预先进行image decode, 再经过定时器调整回正常大小.
 	// 如果不进行预先的decode, 用户缩放时才会进行decode, 可能会需要数百毫秒, 造成卡顿
-	let _width = img.width;
-	let _height = img.height;
 	img.style.width = '30000px';
 	img.style.height = '30000px';
 	img.style.display = 'block';
 	setTimeout(function () {
-		img.style.width = _width + 'px';
-		img.style.height = _height + 'px';
+		img.style.width = realWidth + 'px';
+		img.style.height = realHeight + 'px';
 	}, 0);
 
 	function getPx(str) {
@@ -53,6 +52,12 @@ function run() {
 		} else {
 			newVal.width = oldVal.width / STEP;
 			newVal.height = oldVal.height / STEP;
+		}
+
+		// 如果缩放值离原图大小很接近, 则恢复到原图大小
+		if (Math.abs((newVal.width - realWidth) / realWidth) <= 0.1) {
+			newVal.width = realWidth;
+			newVal.height = realHeight;
 		}
 
 		let marginLeft = img.offsetLeft,
@@ -135,9 +140,19 @@ function run() {
 
 	// 双击切换全屏
 	document.addEventListener('dblclick', e => {
+		// 不知道为什么, 切换全屏时, chrome会重置img的cssText, 这里设置一个定时器重置一下
+		let cssText = img.style.cssText;
+		let _timer = setInterval(() => {
+			if (img.style.cssText != cssText) {
+				img.style.cssText = cssText;
+				clearInterval(_timer);
+			}
+		}, 16);
+
 		chrome.runtime.sendMessage({
 			action: 'toggleFullScreen'
 		});
+
 	});
 
 	console.log('better image browser start')
@@ -150,6 +165,24 @@ function addCss() {
 	el.rel = 'stylesheet';
 	el.type = 'text/css';
 	document.head.appendChild(el);
+}
+
+/**
+ * 根据图片地址, 获取真实大小
+ * 
+ * @param {string} imgUrl 
+ * @returns [width, height]
+ */
+function getImgRealSize(imgUrl: string): Promise<[number, number]> {
+	return new Promise(resolve => {
+		let _img = new Image();
+		_img.src = imgUrl;
+		_img.onload = () => {
+			resolve([_img.width, _img.height]);
+			_img.remove();
+			_img = null;
+		}
+	})
 }
 
 

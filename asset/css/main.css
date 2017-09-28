@@ -35,11 +35,8 @@ body:before {
 }
 
 img {
-	/* transition: 0.25s;
-	transition-timing-function: linear; */
 	display: none;
 	cursor: -webkit-grab !important;
-	/* display: block; */
 	margin: 0;
 	position: absolute;
 }
