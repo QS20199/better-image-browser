@@ -2,6 +2,7 @@ async function run() {
 	const STEP = 1.2;
 
 	addCss();
+	initToastr();
 
 	let img = document.querySelector('img');
 	let [realWidth, realHeight] = await getImgRealSize(img.src);
@@ -55,9 +56,12 @@ async function run() {
 		}
 
 		// 如果缩放值离原图大小很接近, 则恢复到原图大小
+		window['toastr'].clear()
 		if (Math.abs((newVal.width - realWidth) / realWidth) <= 0.1) {
 			newVal.width = realWidth;
 			newVal.height = realHeight;
+			window['toastr']["success"]("100%");
+			window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
 		}
 
 		let marginLeft = img.offsetLeft,
@@ -183,6 +187,26 @@ function getImgRealSize(imgUrl: string): Promise<[number, number]> {
 			_img = null;
 		}
 	})
+}
+
+function initToastr() {
+	window['toastr'].options = {
+		"closeButton": false,
+		"debug": false,
+		"newestOnTop": false,
+		"progressBar": false,
+		"positionClass": "toast-top-right",
+		"preventDuplicates": true,
+		"onclick": null,
+		"showDuration": "300",
+		"hideDuration": "300",
+		"timeOut": "150000",
+		"extendedTimeOut": "300",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	}
 }
 
 

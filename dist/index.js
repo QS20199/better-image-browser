@@ -10,6 +10,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const STEP = 1.2;
         addCss();
+        initToastr();
         let img = document.querySelector('img');
         let [realWidth, realHeight] = yield getImgRealSize(img.src);
         img.style.transform = 'translate(0px, 0px)';
@@ -50,9 +51,12 @@ function run() {
                 newVal.height = oldVal.height / STEP;
             }
             // 如果缩放值离原图大小很接近, 则恢复到原图大小
+            window['toastr'].clear();
             if (Math.abs((newVal.width - realWidth) / realWidth) <= 0.1) {
                 newVal.width = realWidth;
                 newVal.height = realHeight;
+                window['toastr']["success"]("100%");
+                window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
             }
             let marginLeft = img.offsetLeft, marginTop = img.offsetTop;
             // 实际上图片两边到left top的距离
@@ -154,6 +158,25 @@ function getImgRealSize(imgUrl) {
             _img = null;
         };
     });
+}
+function initToastr() {
+    window['toastr'].options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "300",
+        "timeOut": "150000",
+        "extendedTimeOut": "300",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
 }
 // 只在mac以外的平台启用, mac有触摸板不开启这个功能
 if (navigator.platform.indexOf("Mac") == -1) {

@@ -2,6 +2,7 @@ body {
 	background-color: #22292C !important;
 	overflow: hidden;
 	text-align: center;
+	user-select:none;
 }
 
 body:after {
@@ -39,4 +40,22 @@ img {
 	cursor: -webkit-grab !important;
 	margin: 0;
 	position: absolute;
+}
+
+body #toast-container>div {
+	max-width: 100px;
+}
+
+body #toast-container {
+	margin: auto;
+	width: 100px;
+	height: 45px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+body .toast-message {
+	cursor: default;
 }

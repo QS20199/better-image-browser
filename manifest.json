@@ -19,7 +19,12 @@
 				"*://*/*.jpeg"
 			],
 			"js": [
+				"./node_modules/jquery/dist/jquery.min.js",
+				"./node_modules/toastr/build/toastr.min.js",
 				"./dist/index.js"
+			],
+			"css": [
+				"./node_modules/toastr/build/toastr.css"
 			]
 		}
 	],
@@ -37,7 +42,8 @@
 		"tabs"
 	],
 	"web_accessible_resources": [
-		"asset/*"
+		"asset/*",
+		"node_modules/*"
 	],
 	"minimum_chrome_version": "50.0"
 }
