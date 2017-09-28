@@ -170,7 +170,7 @@ function initToastr() {
         "onclick": null,
         "showDuration": "300",
         "hideDuration": "300",
-        "timeOut": "150000",
+        "timeOut": "1500",
         "extendedTimeOut": "300",
         "showEasing": "swing",
         "hideEasing": "linear",
