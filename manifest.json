@@ -18,9 +18,6 @@
 				"*://*/*.jpg",
 				"*://*/*.jpeg"
 			],
-			"css": [
-				"./asset/css/main.css"
-			],
 			"js": [
 				"./dist/index.js"
 			]

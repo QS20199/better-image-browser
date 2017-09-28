@@ -1,6 +1,8 @@
 function run() {
 	const STEP = 1.2;
 
+	addCss();
+
 	let img = document.querySelector('img');
 	img.style.transform = 'translate(0px, 0px)';
 	img.style.left = document.body.offsetWidth / 2 - img.width / 2 + 'px';
@@ -131,6 +133,16 @@ function run() {
 
 	console.log('better image browser start')
 }
+
+function addCss() {
+	let url = chrome.runtime.getURL('/asset/css/main.css');
+	let el = document.createElement('link');
+	el.href = url;
+	el.rel = 'stylesheet';
+	el.type = 'text/css';
+	document.head.appendChild(el);
+}
+
 
 // 只在mac以外的平台启用, mac有触摸板不开启这个功能
 if (navigator.platform.indexOf("Mac") == -1) {
