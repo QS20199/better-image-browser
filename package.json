@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/QS20199/better-image-browser/issues"
   },
-  "homepage": "https://github.com/QS20199/better-image-browser#readme"
+  "homepage": "https://github.com/QS20199/better-image-browser#readme",
+  "dependencies": {
+    "@types/chrome": "0.0.49"
+  }
 }
