@@ -26,6 +26,7 @@ function run() {
         setTimeout(function () {
             img.style.width = realWidth + 'px';
             img.style.height = realHeight + 'px';
+            showToastr();
         }, 0);
         function getPx(str) {
             return Number(str.split('px')[0]);
@@ -55,8 +56,7 @@ function run() {
             if (Math.abs((newVal.width - realWidth) / realWidth) <= 0.1) {
                 newVal.width = realWidth;
                 newVal.height = realHeight;
-                window['toastr']["success"]("100%");
-                window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
+                showToastr();
             }
             let marginLeft = img.offsetLeft, marginTop = img.offsetTop;
             // 实际上图片两边到left top的距离
@@ -177,6 +177,10 @@ function initToastr() {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     };
+}
+function showToastr() {
+    window['toastr']["success"]("100%");
+    window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
 }
 // 只在mac以外的平台启用, mac有触摸板不开启这个功能
 if (navigator.platform.indexOf("Mac") == -1) {

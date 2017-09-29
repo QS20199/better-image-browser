@@ -20,6 +20,7 @@ async function run() {
 	setTimeout(function () {
 		img.style.width = realWidth + 'px';
 		img.style.height = realHeight + 'px';
+		showToastr();
 	}, 0);
 
 	function getPx(str) {
@@ -60,8 +61,7 @@ async function run() {
 		if (Math.abs((newVal.width - realWidth) / realWidth) <= 0.1) {
 			newVal.width = realWidth;
 			newVal.height = realHeight;
-			window['toastr']["success"]("100%");
-			window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
+			showToastr();
 		}
 
 		let marginLeft = img.offsetLeft,
@@ -207,6 +207,11 @@ function initToastr() {
 		"showMethod": "fadeIn",
 		"hideMethod": "fadeOut"
 	}
+}
+
+function showToastr() {
+	window['toastr']["success"]("100%");
+	window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
 }
 
 
