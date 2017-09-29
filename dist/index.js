@@ -11,7 +11,11 @@ function run() {
         const STEP = 1.2;
         addCss();
         initToastr();
+        initContext();
         let img = document.querySelector('img');
+        let container = document.createElement('div');
+        document.body.appendChild(container);
+        container.appendChild(img);
         let [realWidth, realHeight] = yield getImgRealSize(img.src);
         img.style.transform = 'translate(0px, 0px)';
         img.style.left = document.body.offsetWidth / 2 - realWidth / 2 + 'px';
@@ -84,14 +88,13 @@ function run() {
             img.style.top = newVal.top;
         });
         document.addEventListener('click', e => {
-            e.stopPropagation();
+            // e.stopPropagation();
         }, true);
         document.addEventListener('mousedown', e => {
             e.stopPropagation();
             shouldMove = true;
-            img.style.transition = '0s';
             timerClick = setInterval(() => {
-                let m = img.style.transform.match(/translate\((.*)\)/);
+                let m = img.style.transform.match(/translate\((.*?)\)/);
                 let x, y;
                 if (m && m[1]) {
                     [x, y] = m[1].split(',').map(v => Number(v.replace('px', '')));
@@ -108,7 +111,6 @@ function run() {
         document.addEventListener('mouseup', e => {
             e.stopPropagation();
             shouldMove = false;
-            img.style.transition = '';
         }, true);
         document.addEventListener('mousemove', e => {
             e.stopPropagation();
@@ -132,55 +134,84 @@ function run() {
             });
         });
         console.log('better image browser start');
+        function addCss() {
+            let url = chrome.runtime.getURL('/asset/css/main.css');
+            let el = document.createElement('link');
+            el.href = url;
+            el.rel = 'stylesheet';
+            el.type = 'text/css';
+            document.head.appendChild(el);
+        }
+        /**
+         * 根据图片地址, 获取真实大小
+         *
+         * @param {string} imgUrl
+         * @returns [width, height]
+         */
+        function getImgRealSize(imgUrl) {
+            return new Promise(resolve => {
+                let _img = new Image();
+                _img.src = imgUrl;
+                _img.onload = () => {
+                    resolve([_img.width, _img.height]);
+                    _img.remove();
+                    _img = null;
+                };
+            });
+        }
+        function initToastr() {
+            window['toastr'].options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "300",
+                "timeOut": "1500",
+                "extendedTimeOut": "300",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+        }
+        function initContext() {
+            context.init({
+                fadeSpeed: 100,
+                above: 'auto',
+                preventDoubleContext: true,
+                compress: false
+            });
+            context.attach({ selector: 'img' }, [{
+                    text: '向左旋转',
+                    action: function () {
+                        rotate('left');
+                    }
+                }, {
+                    text: '向右旋转',
+                    action: function () {
+                        rotate('right');
+                    }
+                }]);
+            function rotate(dir) {
+                let text = img.style.transform;
+                let m = text.match(/rotate\((-?\d+)deg\)/);
+                let oldVal = m && m[1] && Number(m[1]) || 0;
+                img.style.transition = `0.1s all linear`;
+                img.style.transform = text.replace(/\srotate\(-?\d+deg\)/, '') + ` rotate(${dir == 'left' ? oldVal - 90 : oldVal + 90}deg)`;
+                setTimeout(function () {
+                    img.style.transition = '';
+                }, 100);
+            }
+        }
+        function showToastr() {
+            window['toastr']["success"]("100%");
+            window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
+        }
     });
-}
-function addCss() {
-    let url = chrome.runtime.getURL('/asset/css/main.css');
-    let el = document.createElement('link');
-    el.href = url;
-    el.rel = 'stylesheet';
-    el.type = 'text/css';
-    document.head.appendChild(el);
-}
-/**
- * 根据图片地址, 获取真实大小
- *
- * @param {string} imgUrl
- * @returns [width, height]
- */
-function getImgRealSize(imgUrl) {
-    return new Promise(resolve => {
-        let _img = new Image();
-        _img.src = imgUrl;
-        _img.onload = () => {
-            resolve([_img.width, _img.height]);
-            _img.remove();
-            _img = null;
-        };
-    });
-}
-function initToastr() {
-    window['toastr'].options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": true,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "300",
-        "timeOut": "1500",
-        "extendedTimeOut": "300",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
-}
-function showToastr() {
-    window['toastr']["success"]("100%");
-    window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
 }
 // 只在mac以外的平台启用, mac有触摸板不开启这个功能
 if (navigator.platform.indexOf("Mac") == -1) {
