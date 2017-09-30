@@ -41,7 +41,7 @@ function run() {
         }
         let shouldMove = false, deltaX = 0, deltaY = 0, wheelCount = 0, lastInnerX = 0, lastInnerY = 0;
         let timerClick, timerWheel;
-        document.addEventListener('mousewheel', e => {
+        img.addEventListener('mousewheel', e => {
             let oldVal = {
                 width: getPx(img.style.width),
                 height: getPx(img.style.height),
@@ -71,20 +71,14 @@ function run() {
             let offsetX = img.offsetLeft + oldVal.tX, offsetY = img.offsetTop + oldVal.tY;
             // 鼠标所在到图片两边的距离
             let innerX = e.clientX - offsetX, innerY = e.clientY - offsetY;
-            // 鼠标不在图片内, 不进行缩放
-            if (innerX <= 0 || innerY <= 0 || innerX >= img.width || innerY >= img.height) {
-                return;
+            // 缩放中心通过left和top来改变
+            if (e.deltaY < 0) {
+                newVal.left = oldVal.left - innerX * (STEP - 1);
+                newVal.top = oldVal.top - innerY * (STEP - 1);
             }
             else {
-                // 鼠标在图片内, 缩放中心通过left和top来改变
-                if (e.deltaY < 0) {
-                    newVal.left = oldVal.left - innerX * (STEP - 1);
-                    newVal.top = oldVal.top - innerY * (STEP - 1);
-                }
-                else {
-                    newVal.left = oldVal.left + innerX * (1 - 1 / STEP);
-                    newVal.top = oldVal.top + innerY * (1 - 1 / STEP);
-                }
+                newVal.left = oldVal.left + innerX * (1 - 1 / STEP);
+                newVal.top = oldVal.top + innerY * (1 - 1 / STEP);
             }
             img.style.width = newVal.width;
             img.style.height = newVal.height;

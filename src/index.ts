@@ -7,10 +7,10 @@ async function run() {
 
 	// 新建一个img元素, 替换旧的chrome自己生成的img元素, 因为chrome会在某些情况下操作自己生成的img的style属性, 具体规则不清楚.
 	let oldImg = document.querySelector('img');
-	let img = new Image(); 
+	let img = new Image();
 	img.src = oldImg.src;
 	oldImg.remove();
-	
+
 	let container = document.createElement('div');
 	document.body.appendChild(container);
 	container.appendChild(img);
@@ -44,7 +44,7 @@ async function run() {
 		lastInnerY = 0;
 	let timerClick, timerWheel;
 
-	document.addEventListener('mousewheel', e => {
+	img.addEventListener('mousewheel', e => {
 		let oldVal: any = {
 			width: getPx(img.style.width),
 			height: getPx(img.style.height),
@@ -84,18 +84,13 @@ async function run() {
 		let innerX = e.clientX - offsetX,
 			innerY = e.clientY - offsetY;
 
-		// 鼠标不在图片内, 不进行缩放
-		if (innerX <= 0 || innerY <= 0 || innerX >= img.width || innerY >= img.height) {
-			return;
-		} else {
-			// 鼠标在图片内, 缩放中心通过left和top来改变
-			if (e.deltaY < 0) { // 放大
-				newVal.left = oldVal.left - innerX * (STEP - 1);
-				newVal.top = oldVal.top - innerY * (STEP - 1);
-			} else { // 缩小
-				newVal.left = oldVal.left + innerX * (1 - 1 / STEP);
-				newVal.top = oldVal.top + innerY * (1 - 1 / STEP);
-			}
+		// 缩放中心通过left和top来改变
+		if (e.deltaY < 0) { // 放大
+			newVal.left = oldVal.left - innerX * (STEP - 1);
+			newVal.top = oldVal.top - innerY * (STEP - 1);
+		} else { // 缩小
+			newVal.left = oldVal.left + innerX * (1 - 1 / STEP);
+			newVal.top = oldVal.top + innerY * (1 - 1 / STEP);
 		}
 
 		img.style.width = newVal.width;
