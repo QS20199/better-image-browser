@@ -7,6 +7,8 @@ async function run() {
 
 	// 新建一个img元素, 替换旧的chrome自己生成的img元素, 因为chrome会在某些情况下操作自己生成的img的style属性, 具体规则不清楚.
 	let oldImg = document.querySelector('img');
+	let oldWidth = oldImg.width;
+	let oldHeight = oldImg.height;
 	let img = new Image();
 	img.src = oldImg.src;
 	oldImg.remove();
@@ -16,8 +18,8 @@ async function run() {
 	container.appendChild(img);
 	let [realWidth, realHeight] = await getImgRealSize(img.src);
 	img.style.transform = 'translate(0px, 0px)';
-	img.style.left = document.body.offsetWidth / 2 - realWidth / 2 + 'px';
-	img.style.top = document.body.offsetHeight / 2 - realHeight / 2 + 'px';
+	img.style.left = document.body.offsetWidth / 2 - oldWidth / 2 + 'px';
+	img.style.top = document.body.offsetHeight / 2 - oldHeight / 2 + 'px';
 	img.draggable = false;
 	img.id = 'img';
 
@@ -27,9 +29,8 @@ async function run() {
 	img.style.height = '30000px';
 	img.style.display = 'block';
 	setTimeout(function () {
-		img.style.width = realWidth + 'px';
-		img.style.height = realHeight + 'px';
-		showToastr();
+		img.style.width = oldWidth + 'px';
+		img.style.height = oldHeight + 'px';
 	}, 0);
 
 	function getPx(str) {
