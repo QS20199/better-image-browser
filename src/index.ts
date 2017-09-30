@@ -5,7 +5,12 @@ async function run() {
 	initToastr();
 	initContext();
 
-	let img = document.querySelector('img');
+	// 新建一个img元素, 替换旧的chrome自己生成的img元素, 因为chrome会在某些情况下操作自己生成的img的style属性, 具体规则不清楚.
+	let oldImg = document.querySelector('img');
+	let img = new Image(); 
+	img.src = oldImg.src;
+	oldImg.remove();
+	
 	let container = document.createElement('div');
 	document.body.appendChild(container);
 	container.appendChild(img);
@@ -158,7 +163,6 @@ async function run() {
 		chrome.runtime.sendMessage({
 			action: 'toggleFullScreen'
 		});
-
 	});
 
 	console.log('better image browser start')

@@ -1,6 +1,6 @@
 {
   "name": "better-image-browser",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "a chrome extension to browse image better",
   "main": "./dist/index.js",
   "scripts": {
