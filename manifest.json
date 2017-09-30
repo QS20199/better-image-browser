@@ -16,7 +16,10 @@
 			"matches": [
 				"*://*/*.png",
 				"*://*/*.jpg",
-				"*://*/*.jpeg"
+				"*://*/*.jpeg",
+				"file:///*/*.png",
+				"file:///*/*.jpg",
+				"file:///*/*.jpeg"
 			],
 			"js": [
 				"./node_modules/jquery/dist/jquery.min.js",
