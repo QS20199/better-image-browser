@@ -1,4 +1,7 @@
 # better-image-browser
+
+https://chrome.google.com/webstore/detail/better-image-browser/kiogkahifhldimpknnnhdiemepmebnhe
+
 a chrome extension to browse image better
 
 
