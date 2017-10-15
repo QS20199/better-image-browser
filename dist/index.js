@@ -141,23 +141,6 @@ function run() {
             el.type = 'text/css';
             document.head.appendChild(el);
         }
-        /**
-         * 根据图片地址, 获取真实大小
-         *
-         * @param {string} imgUrl
-         * @returns [width, height]
-         */
-        function getImgRealSize(imgUrl) {
-            return new Promise(resolve => {
-                let _img = new Image();
-                _img.src = imgUrl;
-                _img.onload = () => {
-                    resolve([_img.width, _img.height]);
-                    _img.remove();
-                    _img = null;
-                };
-            });
-        }
         function initToastr() {
             window['toastr'].options = {
                 "closeButton": false,
@@ -212,8 +195,55 @@ function run() {
         }
     });
 }
-// 只在mac以外的平台启用, mac有触摸板不开启这个功能
-if (navigator.platform.indexOf("Mac") == -1) {
-    run();
+(function () {
+    return __awaiter(this, void 0, void 0, function* () {
+        // 只在mac以外的平台启用, mac有触摸板不开启这个功能
+        if (navigator.platform.indexOf("Mac") == -1) {
+            // 部分图床(如V2)自身的URL是.png结尾, 但实际上并不是image类型, 这里判断一下
+            let contentType = yield getContentType(location.href);
+            if (/^image/.test(contentType)) {
+                run();
+            }
+            else {
+                console.log('contentType为非图片类型, better image viewer已禁用');
+            }
+        }
+    });
+})();
+/**
+ * 根据图片地址, 获取真实大小
+ *
+ * @param {string} imgUrl
+ * @returns [width, height]
+ */
+function getImgRealSize(imgUrl) {
+    return new Promise(resolve => {
+        let _img = new Image();
+        _img.src = imgUrl;
+        _img.onload = () => {
+            resolve([_img.width, _img.height]);
+            _img.remove();
+            _img = null;
+        };
+    });
+}
+/**
+ * 根据资源地址, 获取contenttype
+ *
+ * @param {string} url
+ * @returns [width, height]
+ */
+function getContentType(url) {
+    return new Promise(resolve => {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                let contentType = xhr.getResponseHeader("Content-Type");
+                resolve(contentType);
+            }
+        };
+        xhr.send();
+    });
 }
 //# sourceMappingURL=index.js.map
