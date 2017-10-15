@@ -35,7 +35,7 @@
 	],
 	"background": {
 		"scripts": [
-			"./dist/eventPage.js"
+			"./src/eventPage.js"
 		],
 		"persistent": false
 	},
