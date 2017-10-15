@@ -30,6 +30,7 @@ function run() {
         addCss();
         initToastr();
         initContext();
+        macTips();
         // 新建一个img元素, 替换旧的chrome自己生成的img元素, 因为chrome会在某些情况下操作自己生成的img的style属性, 具体规则不清楚.
         let oldImg = document.querySelector('img');
         let oldWidth = oldImg.width;
@@ -83,7 +84,7 @@ function run() {
             if (Math.abs((newVal.width - realWidth) / realWidth) <= 0.1) {
                 newVal.width = realWidth;
                 newVal.height = realHeight;
-                showToastr();
+                showToastr("100%");
             }
             let marginLeft = img.offsetLeft, marginTop = img.offsetTop;
             // 实际上图片两边到left top的距离
@@ -207,11 +208,11 @@ function run() {
                 }, 100);
             }
         }
-        function showToastr() {
-            window['toastr']["success"]("100%");
-            window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
-        }
     });
+}
+function showToastr(str) {
+    window['toastr']["success"](str);
+    window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
 }
 /**
  * 根据图片地址, 获取真实大小
@@ -247,6 +248,21 @@ function getContentType(url) {
             }
         };
         xhr.send();
+    });
+}
+/**
+ * 如果检测到mac系统, 则弹出一次性提示
+ */
+function macTips() {
+    if (navigator.platform.indexOf("Mac") == -1)
+        return;
+    chrome.storage.local.get(sto => {
+        if (!sto.isShowMacTips) {
+            alert(`来自Better Image Viewer的提醒:\n\n检测到当前设备为MacOS,\n如果您正在使用触摸板, 触摸板的双指手势会和本插件冲突,\n此时可以点击插件图标来停用Better Image Viewer.`);
+            chrome.storage.local.set({
+                isShowMacTips: true
+            });
+        }
     });
 }
 //# sourceMappingURL=index.js.map

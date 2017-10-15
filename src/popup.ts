@@ -1,13 +1,18 @@
 let btn = document.getElementById("ctrl-btn");
+const TEXT_CONFIG = {
+	on: 'Better Image Viewer 已启用',
+	off: 'Better Image Viewer 已停用'
+}
 
 //状态初始化
 chrome.storage.local.get(function (ret) {
 	if (ret.status !== "off") {
-		btn.innerHTML = "已启用";
+		btn.innerHTML = TEXT_CONFIG.on;
 		btn.dataset.status = "on";
 		btn.classList.add("btn-success");
 	} else {
-		btn.innerHTML = "已启用";
+		btn.innerHTML = TEXT_CONFIG.off;
+		btn.dataset.status = "off";
 	}
 })
 
@@ -15,13 +20,13 @@ chrome.storage.local.get(function (ret) {
 btn.addEventListener("click", function (event) {
 	this.classList.toggle('btn-success');
 	if (this.dataset.status !== "off") { //本身已启用
-		this.innerHTML = '已停用';
+		this.innerHTML = TEXT_CONFIG.off;
 		this.dataset.status = "off";
 		chrome.storage.local.set({
 			status: "off"
 		})
 	} else {
-		this.innerHTML = "已启用";
+		this.innerHTML = TEXT_CONFIG.on;
 		this.dataset.status = "on";
 		chrome.storage.local.set({
 			status: "on"
