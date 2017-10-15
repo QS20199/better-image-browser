@@ -6,6 +6,8 @@
 		"**/.hg": true,
 		"**/CVS": true,
 		"**/.DS_Store": true,
-		"dist/**/*": true
+		"dist/**/*": true,
+		"src/**/*.js": true,
+		"src/**/*.js.map": true
 	}
 }

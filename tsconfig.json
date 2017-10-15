@@ -8,8 +8,6 @@
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"sourceMap": true,
-		"outDir": "dist/",
-		"allowJs": true,
 		"declaration": false,
 		"watch": true
 	},

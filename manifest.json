@@ -24,8 +24,8 @@
 			"js": [
 				"./node_modules/jquery/dist/jquery.min.js",
 				"./node_modules/toastr/build/toastr.min.js",
-				"./dist/lib/context.js",
-				"./dist/index.js"
+				"./src/lib/context.js",
+				"./src/index.js"
 			],
 			"css": [
 				"./asset/css/context.standalone.css",
