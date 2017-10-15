@@ -4,7 +4,9 @@
 	"description": "a chrome extension to browse image better",
 	"version": "1.1",
 	"browser_action": {
-		"default_icon": "./asset/img/icon_128.png"
+		"default_icon": "./asset/img/icon_128.png",
+		"default_title": "Better Image Browser",
+		"default_popup": "./src/popup.html"
 	},
 	"icons": {
 		"128": "./asset/img/icon_128.png",

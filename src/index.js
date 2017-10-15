@@ -6,6 +6,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+// 入口
+(function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        // 检测是否启用
+        chrome.storage.local.get((storage) => __awaiter(this, void 0, void 0, function* () {
+            if (storage.status !== 'off') {
+                // 部分图床(如V2)自身的URL是.png结尾, 但实际上并不是image类型, 这里判断一下
+                let contentType = yield getContentType(location.href);
+                if (/^image/.test(contentType)) {
+                    run();
+                }
+                else {
+                    console.log('contentType为非图片类型, better image viewer已禁用');
+                }
+            }
+        }));
+    });
+})();
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const STEP = 1.2;
@@ -161,13 +179,13 @@ function run() {
             };
         }
         function initContext() {
-            context.init({
+            window['context'].init({
                 fadeSpeed: 100,
                 above: 'auto',
                 preventDoubleContext: true,
                 compress: false
             });
-            context.attach({ selector: 'img' }, [{
+            window['context'].attach({ selector: 'img' }, [{
                     text: '向左旋转',
                     action: function () {
                         rotate('left');
@@ -195,21 +213,6 @@ function run() {
         }
     });
 }
-(function () {
-    return __awaiter(this, void 0, void 0, function* () {
-        // 只在mac以外的平台启用, mac有触摸板不开启这个功能
-        if (navigator.platform.indexOf("Mac") == -1) {
-            // 部分图床(如V2)自身的URL是.png结尾, 但实际上并不是image类型, 这里判断一下
-            let contentType = yield getContentType(location.href);
-            if (/^image/.test(contentType)) {
-                run();
-            }
-            else {
-                console.log('contentType为非图片类型, better image viewer已禁用');
-            }
-        }
-    });
-})();
 /**
  * 根据图片地址, 获取真实大小
  *

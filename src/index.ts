@@ -1,3 +1,20 @@
+// 入口
+(async function main() {
+	// 检测是否启用
+	chrome.storage.local.get(async storage => {
+		if (storage.status !== 'off') {
+			// 部分图床(如V2)自身的URL是.png结尾, 但实际上并不是image类型, 这里判断一下
+			let contentType = await getContentType(location.href);
+			if (/^image/.test(contentType)) {
+				run();
+			} else {
+				console.log('contentType为非图片类型, better image viewer已禁用')
+			}
+		}
+	})
+})();
+
+
 async function run() {
 	const STEP = 1.2;
 
@@ -195,14 +212,14 @@ async function run() {
 	}
 
 	function initContext() {
-		context.init({
+		window['context'].init({
 			fadeSpeed: 100,
 			above: 'auto',
 			preventDoubleContext: true,
 			compress: false
 		});
 
-		context.attach({ selector: 'img' }, [{
+		window['context'].attach({ selector: 'img' }, [{
 			text: '向左旋转',
 			action: function () {
 				rotate('left')
@@ -234,21 +251,6 @@ async function run() {
 }
 
 
-
-
-(async function () {
-	// 只在mac以外的平台启用, mac有触摸板不开启这个功能
-	if (navigator.platform.indexOf("Mac") == -1) {
-
-		// 部分图床(如V2)自身的URL是.png结尾, 但实际上并不是image类型, 这里判断一下
-		let contentType = await getContentType(location.href);
-		if (/^image/.test(contentType)) {
-			run();
-		} else {
-			console.log('contentType为非图片类型, better image viewer已禁用')
-		}
-	}
-})();
 
 
 
