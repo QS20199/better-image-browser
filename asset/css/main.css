@@ -59,3 +59,7 @@ body #toast-container {
 body .toast-message {
 	cursor: default;
 }
+
+body .toast {
+	box-shadow: 0 0 0 !important;
+}

@@ -85,8 +85,8 @@ function run() {
             if (Math.abs((newVal.width - realWidth) / realWidth) <= 0.1) {
                 newVal.width = realWidth;
                 newVal.height = realHeight;
-                showToastr("100%");
             }
+            showToastr(`${Math.round(newVal.width / realWidth * 100)}%`);
             let marginLeft = img.offsetLeft, marginTop = img.offsetTop;
             // 实际上图片两边到left top的距离
             let offsetX = img.offsetLeft + oldVal.tX, offsetY = img.offsetTop + oldVal.tY;
@@ -170,10 +170,10 @@ function run() {
                 "positionClass": "toast-top-right",
                 "preventDuplicates": true,
                 "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "300",
-                "timeOut": "1500",
-                "extendedTimeOut": "300",
+                "showDuration": "0",
+                "hideDuration": "0",
+                "timeOut": "750",
+                "extendedTimeOut": "750",
                 "showEasing": "swing",
                 "hideEasing": "linear",
                 "showMethod": "fadeIn",
@@ -212,6 +212,7 @@ function run() {
     });
 }
 function showToastr(str) {
+    window['toastr'].remove();
     window['toastr']["success"](str);
     window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
 }
