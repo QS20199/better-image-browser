@@ -7,6 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 // 入口
+// 为避免闪烁一下, 这里先隐藏
+document.documentElement.style.opacity = '0';
 (function main() {
     return __awaiter(this, void 0, void 0, function* () {
         // 检测是否启用
@@ -15,12 +17,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 // 部分图床(如V2)自身的URL是.png结尾, 但实际上并不是image类型, 这里判断一下
                 let contentType = yield getContentType(location.href);
                 if (/^image/.test(contentType)) {
-                    run();
+                    yield run();
                 }
                 else {
                     console.log('contentType为非图片类型, better image viewer已禁用');
                 }
             }
+            document.documentElement.style.opacity = '1';
         }));
     });
 })();
@@ -52,10 +55,8 @@ function run() {
         img.style.width = '30000px';
         img.style.height = '30000px';
         img.style.display = 'block';
-        setTimeout(function () {
-            img.style.width = oldWidth + 'px';
-            img.style.height = oldHeight + 'px';
-        }, 0);
+        img.style.width = oldWidth + 'px';
+        img.style.height = oldHeight + 'px';
         function getPx(str) {
             return Number(str.split('px')[0]);
         }
