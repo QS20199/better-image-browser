@@ -25,11 +25,30 @@ btn.addEventListener("click", function (event) {
 		chrome.storage.local.set({
 			status: "off"
 		})
+		setIconDisable();
 	} else {
 		this.innerHTML = TEXT_CONFIG.on;
 		this.dataset.status = "on";
 		chrome.storage.local.set({
 			status: "on"
-		})
+		});
+		setIconEnable();
 	}
 }, false)
+
+
+
+
+function setIconDisable() {
+	chrome.browserAction.setIcon({
+		path : "/asset/img/icon_gray_128.png"
+	});
+}
+
+
+
+function setIconEnable() {
+	chrome.browserAction.setIcon({
+		path : "/asset/img/icon_128.png"
+	});
+}
