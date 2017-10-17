@@ -26,13 +26,12 @@
 			],
 			"js": [
 				"./node_modules/jquery/dist/jquery.min.js",
-				"./node_modules/toastr/build/toastr.min.js",
 				"./src/lib/context.js",
 				"./src/index.js"
 			],
 			"css": [
 				"./asset/css/context.standalone.css",
-				"./node_modules/toastr/build/toastr.css"
+				"./asset/css/toastr.css"
 			]
 		}
 	],

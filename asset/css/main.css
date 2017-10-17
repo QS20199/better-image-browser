@@ -65,5 +65,6 @@ body .toast {
 }
 
 body #toast-container {
-	pointer-events: none;
+	transition: 0.3s opacity;
+	opacity: 0;
 }

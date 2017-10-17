@@ -6,6 +6,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+let $ = window['$'];
 // 入口
 // 为避免闪烁一下, 这里先隐藏
 document.documentElement.style.opacity = '0';
@@ -165,23 +166,13 @@ function run() {
             document.head.appendChild(el);
         }
         function initToastr() {
-            window['toastr'].options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": true,
-                "onclick": null,
-                "showDuration": "0",
-                "hideDuration": "0",
-                "timeOut": "7500",
-                "extendedTimeOut": "750",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
+            let htm = `
+		<div id="toast-container" class="toast-top-right" aria-live="polite" role="alert">
+			<div class="toast" style="padding: 10px;">
+				<div class="toast-message" id="toast-message"></div>
+			</div>
+		</div>`;
+            $('body').append($(htm));
         }
         function initContext() {
             window['context'].init({
@@ -214,10 +205,15 @@ function run() {
         }
     });
 }
+let showToastrTimer;
 function showToastr(str) {
-    window['toastr'].remove();
-    window['toastr']["success"](str);
-    window['$']('.toast-success').removeClass('toast-success').css('padding', '10px');
+    document.getElementById('toast-message').innerHTML = str;
+    let c = document.getElementById('toast-container');
+    c.style.opacity = '1';
+    clearTimeout(showToastrTimer);
+    showToastrTimer = setTimeout(function () {
+        c.style.opacity = '0';
+    }, 750);
 }
 /**
  * 根据图片地址, 获取真实大小
