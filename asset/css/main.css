@@ -63,3 +63,7 @@ body .toast-message {
 body .toast {
 	box-shadow: 0 0 0 !important;
 }
+
+body #toast-container {
+	pointer-events: none;
+}

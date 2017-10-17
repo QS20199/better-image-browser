@@ -64,7 +64,7 @@ async function run() {
 		lastInnerY = 0;
 	let timerClick, timerWheel;
 
-	img.addEventListener('mousewheel', e => {
+	document.addEventListener('mousewheel', e => {
 		let oldVal: any = {
 			width: getPx(img.style.width),
 			height: getPx(img.style.height),
@@ -86,12 +86,10 @@ async function run() {
 		}
 
 		// 如果缩放值离原图大小很接近, 则恢复到原图大小
-		window['toastr'].clear()
 		if (Math.abs((newVal.width - realWidth) / realWidth) <= 0.1) {
 			newVal.width = realWidth;
 			newVal.height = realHeight;
 		}
-		showToastr(`${Math.round(newVal.width / realWidth * 100)}%`);
 
 		let marginLeft = img.offsetLeft,
 			marginTop = img.offsetTop;
@@ -104,6 +102,12 @@ async function run() {
 		let innerX = e.clientX - offsetX,
 			innerY = e.clientY - offsetY;
 
+		// 如果鼠标不在图片范围内, 则不进行缩放
+		if (innerX < 0 || innerY < 0 || innerX > oldVal.width || innerY > oldVal.height) return;
+
+		// 显示百分比
+		showToastr(`${Math.round(newVal.width / realWidth * 100)}%`);
+		
 		// 缩放中心通过left和top来改变
 		if (e.deltaY < 0) { // 放大
 			newVal.left = oldVal.left - innerX * (STEP - 1);
@@ -204,7 +208,7 @@ async function run() {
 			"onclick": null,
 			"showDuration": "0",
 			"hideDuration": "0",
-			"timeOut": "750",
+			"timeOut": "7500",
 			"extendedTimeOut": "750",
 			"showEasing": "swing",
 			"hideEasing": "linear",
