@@ -20,6 +20,9 @@ document.documentElement.style.opacity = '0';
                 if (/^image/.test(contentType)) {
                     yield run();
                 }
+                else if (/^chrome\-extension\:.*\/demo\.html/.test(location.href)) {
+                    yield run();
+                }
                 else {
                     console.log('contentType为非图片类型, better image viewer已禁用');
                 }
@@ -46,11 +49,6 @@ function run() {
         document.body.appendChild(container);
         container.appendChild(img);
         let [realWidth, realHeight] = yield getImgRealSize(img.src);
-        img.style.transform = 'translate(0px, 0px)';
-        img.style.left = document.body.offsetWidth / 2 - oldWidth / 2 + 'px';
-        img.style.top = document.body.offsetHeight / 2 - oldHeight / 2 + 'px';
-        img.draggable = false;
-        img.id = 'img';
         // 先让图片渲染足够大, 让raster主动预先进行image decode, 再经过定时器调整回正常大小.
         // 如果不进行预先的decode, 用户缩放时才会进行decode, 可能会需要数百毫秒, 造成卡顿
         img.style.width = '30000px';
@@ -58,6 +56,11 @@ function run() {
         img.style.display = 'block';
         img.style.width = oldWidth + 'px';
         img.style.height = oldHeight + 'px';
+        img.style.transform = 'translate(0px, 0px)';
+        img.style.left = document.body.offsetWidth / 2 - oldWidth / 2 + 'px';
+        img.style.top = document.body.offsetHeight / 2 - oldHeight / 2 + 'px';
+        img.draggable = false;
+        img.id = 'img';
         function getPx(str) {
             return Number(str.split('px')[0]);
         }
@@ -167,7 +170,7 @@ function run() {
         }
         function initToastr() {
             let htm = `
-		<div id="toast-container" class="toast-top-right" aria-live="polite" role="alert">
+		<div style='display:none' id="toast-container" class="toast-top-right" aria-live="polite" role="alert">
 			<div class="toast" style="padding: 10px;">
 				<div class="toast-message" id="toast-message"></div>
 			</div>
@@ -182,12 +185,12 @@ function run() {
                 compress: false
             });
             window['context'].attach({ selector: 'img' }, [{
-                    text: '向左旋转',
+                    text: '\u5411\u5de6\u65cb\u8f6c',
                     action: function () {
                         rotate('left');
                     }
                 }, {
-                    text: '向右旋转',
+                    text: '\u5411\u53f3\u65cb\u8f6c',
                     action: function () {
                         rotate('right');
                     }
@@ -207,12 +210,11 @@ function run() {
 }
 let showToastrTimer;
 function showToastr(str) {
-    document.getElementById('toast-message').innerHTML = str;
-    let c = document.getElementById('toast-container');
-    c.style.opacity = '1';
+    $("#toast-message").html(str);
+    $("#toast-container").fadeIn();
     clearTimeout(showToastrTimer);
     showToastrTimer = setTimeout(function () {
-        c.style.opacity = '0';
+        $("#toast-container").fadeOut();
     }, 750);
 }
 /**
