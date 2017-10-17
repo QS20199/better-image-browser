@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Better Image Browser",
 	"description": "a chrome extension to browse image better",
-	"version": "1.3.2",
+	"version": "1.3.3",
 	"browser_action": {
 		"default_icon": "./asset/img/icon_128.png",
 		"default_title": "Better Image Browser",
