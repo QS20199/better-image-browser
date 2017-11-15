@@ -1,11 +1,11 @@
 {
 	"manifest_version": 2,
-	"name": "Best Image Viewer",
+	"name": "Better Image Viewer - Like Picasa",
 	"description": "a chrome extension to browse image better",
-	"version": "1.3.5",
+	"version": "1.3.6",
 	"browser_action": {
 		"default_icon": "./asset/img/icon_128.png",
-		"default_title": "Best Image Viewer",
+		"default_title": "Better Image Viewer",
 		"default_popup": "./src/popup.html"
 	},
 	"icons": {
