@@ -14,7 +14,7 @@ document.documentElement.style.opacity = '0';
 			} else if (/^chrome\-extension\:.*\/demo\.html/.test(location.href)) { // 插件本身的demo页面, 也启用
 				await run();
 			} else {
-				console.log('contentType为非图片类型, better image viewer已禁用')
+				// console.log('contentType为非图片类型, better image viewer已禁用')
 			}
 		}
 		document.documentElement.style.opacity = '1';

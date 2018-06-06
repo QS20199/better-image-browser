@@ -24,7 +24,7 @@ document.documentElement.style.opacity = '0';
                     yield run();
                 }
                 else {
-                    console.log('contentType为非图片类型, better image viewer已禁用');
+                    // console.log('contentType为非图片类型, better image viewer已禁用')
                 }
             }
             document.documentElement.style.opacity = '1';
