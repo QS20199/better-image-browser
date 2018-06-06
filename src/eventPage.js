@@ -20,15 +20,12 @@ chrome.storage.local.get(function (ret) {
             path: "/asset/img/icon_gray_128.png"
         });
     }
+});
+chrome.runtime.onInstalled.addListener(function (details) {
     // 安装后打开demo页面
-    if (!ret.hasOpenDemoPage) {
+    if (details.reason == "install") {
         chrome.tabs.create({
             url: './src/demo.html'
-        });
-    }
-    else {
-        chrome.storage.local.set({
-            hasOpenDemoPage: true
         });
     }
 });

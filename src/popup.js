@@ -18,7 +18,7 @@ chrome.storage.local.get(function (ret) {
 //事件绑定
 btn.addEventListener("click", function (event) {
     this.classList.toggle('btn-success');
-    if (this.dataset.status !== "off") {
+    if (this.dataset.status !== "off") { //本身已启用
         this.innerHTML = TEXT_CONFIG.off;
         this.dataset.status = "off";
         chrome.storage.local.set({

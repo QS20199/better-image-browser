@@ -20,7 +20,7 @@ document.documentElement.style.opacity = '0';
                 if (/^image/.test(contentType)) {
                     yield run();
                 }
-                else if (/^chrome\-extension\:.*\/demo\.html/.test(location.href)) {
+                else if (/^chrome\-extension\:.*\/demo\.html/.test(location.href)) { // 插件本身的demo页面, 也启用
                     yield run();
                 }
                 else {
@@ -100,11 +100,11 @@ function run() {
             // 显示百分比
             showToastr(`${Math.round(newVal.width / realWidth * 100)}%`);
             // 缩放中心通过left和top来改变
-            if (e.deltaY < 0) {
+            if (e.deltaY < 0) { // 放大
                 newVal.left = oldVal.left - innerX * (STEP - 1);
                 newVal.top = oldVal.top - innerY * (STEP - 1);
             }
-            else {
+            else { // 缩小
                 newVal.left = oldVal.left + innerX * (1 - 1 / STEP);
                 newVal.top = oldVal.top + innerY * (1 - 1 / STEP);
             }
