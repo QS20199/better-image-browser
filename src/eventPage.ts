@@ -21,7 +21,6 @@ chrome.storage.local.get(function (ret) {
 			path: "/asset/img/icon_gray_128.png"
 		});
 	}
-
 })
 
 chrome.runtime.onInstalled.addListener(function (details) {

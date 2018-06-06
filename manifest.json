@@ -17,12 +17,7 @@
 		{
 			"run_at": "document_start",
 			"matches": [
-				"*://*/*.png",
-				"*://*/*.jpg",
-				"*://*/*.jpeg",
-				"file:///*/*.png",
-				"file:///*/*.jpg",
-				"file:///*/*.jpeg"
+				"<all_urls>"
 			],
 			"js": [
 				"./node_modules/jquery/dist/jquery.min.js",
