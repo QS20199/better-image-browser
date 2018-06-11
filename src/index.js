@@ -8,8 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 let $ = window['$'];
 // 入口
-// 为避免闪烁一下, 这里先隐藏
-document.documentElement.style.opacity = '0';
 (function main() {
     return __awaiter(this, void 0, void 0, function* () {
         // 检测是否启用
@@ -20,14 +18,13 @@ document.documentElement.style.opacity = '0';
                 if (/^image/.test(contentType)) {
                     yield run();
                 }
-                else if (/^chrome\-extension\:.*\/demo\.html/.test(location.href)) { // 插件本身的demo页面, 也启用
+                else if (/^chrome\-extension\:.*\/demo\.html/.test(location.href)) {
                     yield run();
                 }
                 else {
                     // console.log('contentType为非图片类型, better image viewer已禁用')
                 }
             }
-            document.documentElement.style.opacity = '1';
         }));
     });
 })();
@@ -100,11 +97,11 @@ function run() {
             // 显示百分比
             showToastr(`${Math.round(newVal.width / realWidth * 100)}%`);
             // 缩放中心通过left和top来改变
-            if (e.deltaY < 0) { // 放大
+            if (e.deltaY < 0) {
                 newVal.left = oldVal.left - innerX * (STEP - 1);
                 newVal.top = oldVal.top - innerY * (STEP - 1);
             }
-            else { // 缩小
+            else {
                 newVal.left = oldVal.left + innerX * (1 - 1 / STEP);
                 newVal.top = oldVal.top + innerY * (1 - 1 / STEP);
             }

@@ -1,8 +1,6 @@
 let $ = window['$'];
 
 // 入口
-// 为避免闪烁一下, 这里先隐藏
-document.documentElement.style.opacity = '0';
 (async function main() {
 	// 检测是否启用
 	chrome.storage.local.get(async storage => {
@@ -17,7 +15,6 @@ document.documentElement.style.opacity = '0';
 				// console.log('contentType为非图片类型, better image viewer已禁用')
 			}
 		}
-		document.documentElement.style.opacity = '1';
 	})
 })();
 
