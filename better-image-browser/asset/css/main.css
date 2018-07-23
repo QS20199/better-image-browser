@@ -7,7 +7,7 @@ body {
 
 body:after {
 	opacity: 0.2;
-	background: url('chrome-extension://__MSG_@@extension_id__/asset/img/stars-lg.svg') center/1140px 622px repeat;
+	background: url('../img/stars-sm.svg') center/1140px 622px repeat;
 	animation: pulse 8s ease infinite;
 	position: absolute;
 	width: 100%;
@@ -27,7 +27,7 @@ body:before {
 	left: 0%;
 	top: 0%;
 	content: '';
-	background: url('chrome-extension://__MSG_@@extension_id__/asset/img/stars-sm.svg') center/1140px 622px repeat;
+	background: url('../img/stars-sm.svg') center/1140px 622px repeat;
 	display: block;
 	z-index: -1;
 	transform-origin: center;

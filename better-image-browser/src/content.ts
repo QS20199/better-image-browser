@@ -1,4 +1,4 @@
-let $ = window['$'];
+import * as $ from 'jquery';
 
 // 入口
 (async function main() {
@@ -190,17 +190,19 @@ async function run() {
 	console.log('better image browser start')
 
 	function addCss() {
-		let url = chrome.runtime.getURL('/asset/css/main.css');
-		let el = document.createElement('link');
-		el.href = url;
-		el.rel = 'stylesheet';
-		el.type = 'text/css';
-		document.head.appendChild(el);
+		require('../asset/css/main.css');
+		// let url = chrome.runtime.getURL('/asset/css/main.css');
+		// let el = document.createElement('link');
+		// el.href = url;
+		// el.rel = 'stylesheet';
+		// el.type = 'text/css';
+		// document.head.appendChild(el);
 	}
 
 
 
 	function initToastr() {
+		require('../asset/css/toastr.css');
 		let htm = `
 		<div style='display:none' id="toast-container" class="toast-top-right" aria-live="polite" role="alert">
 			<div class="toast" style="padding: 10px;">
@@ -211,20 +213,23 @@ async function run() {
 	}
 
 	function initContext() {
-		window['context'].init({
+		let context = require('./lib/context.js').context;
+		console.log(context);
+		require('../asset/css/context.standalone.css')
+		context.init({
 			fadeSpeed: 100,
 			above: 'auto',
 			preventDoubleContext: true,
 			compress: false
 		});
 
-		window['context'].attach({ selector: 'img' }, [{
-			text: '\u5411\u5de6\u65cb\u8f6c', // 向左旋转的unicode编码, 不知道为什么chrome-extension://demo.html页面的中文都会变成乱码
+		context.attach({ selector: 'img' }, [{
+			text: 'rotate left', 
 			action: function () {
 				rotate('left')
 			}
 		}, {
-			text: '\u5411\u53f3\u65cb\u8f6c', // 向右旋转
+			text: 'rotate right',
 			action: function () {
 				rotate('right')
 			}
@@ -306,8 +311,10 @@ function macTips() {
 
 	chrome.storage.local.get(sto => {
 		if (!sto.isShowMacTips) {
-			// alert(`来自Better Image Viewer的提醒:\n\n检测到当前设备为MacOS,\n如果您正在使用触摸板, 触摸板的双指手势会和本插件冲突,\n此时可以点击插件图标来停用Better Image Viewer.`);
-			alert(`\u6765\u81ea\u0042\u0065\u0074\u0074\u0065\u0072\u0020\u0049\u006d\u0061\u0067\u0065\u0020\u0056\u0069\u0065\u0077\u0065\u0072\u7684\u63d0\u9192:\n\n\u68c0\u6d4b\u5230\u5f53\u524d\u8bbe\u5907\u4e3a\u004d\u0061\u0063\u004f\u0053,\n\u5982\u679c\u60a8\u6b63\u5728\u4f7f\u7528\u89e6\u6478\u677f\u002c\u0020\u89e6\u6478\u677f\u7684\u53cc\u6307\u624b\u52bf\u4f1a\u548c\u672c\u63d2\u4ef6\u51b2\u7a81\u002c\n\u6b64\u65f6\u53ef\u4ee5\u70b9\u51fb\u63d2\u4ef6\u56fe\u6807\u6765\u505c\u7528\u0042\u0065\u0074\u0074\u0065\u0072\u0020\u0049\u006d\u0061\u0067\u0065\u0020\u0056\u0069\u0065\u0077\u0065\u0072\u002e`);
+			alert('Tips from Better Image Viewer:\n\n' +
+				'Dececting you are using MacOS.\n' +
+				'If you are using touchpad, it will be conflicted with this extension.\n' +
+				'If so, you can disabled this extension by clicking the extension icon.');
 			chrome.storage.local.set({
 				isShowMacTips: true
 			})
