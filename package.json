@@ -1,6 +1,6 @@
 {
   "name": "better-image-browser",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "a chrome extension to browse image better",
   "main": "./dist/index.js",
   "scripts": {
@@ -21,12 +21,12 @@
     "jquery": "^3.2.1"
   },
   "devDependencies": {
-    "@types/node": "^10.5.2",
+    "@types/node": "10.5.2",
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
     "style-loader": "^0.21.0",
     "ts-loader": "^4.4.2",
-    "typescript": "^2.9.2",
+    "typescript": "2.9.2",
     "unicode-loader": "^1.0.7",
     "url-loader": "^1.0.1",
     "webpack": "^4.16.1",

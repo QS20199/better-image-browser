@@ -120,10 +120,10 @@ async function run() {
 			newVal.top = oldVal.top + innerY * (1 - 1 / STEP);
 		}
 
-		img.style.width = newVal.width;
-		img.style.height = newVal.height;
-		img.style.left = newVal.left;
-		img.style.top = newVal.top;
+		img.style.width = newVal.width + 'px';
+		img.style.height = newVal.height + 'px';
+		img.style.left = newVal.left + 'px';
+		img.style.top = newVal.top + 'px';
 	});
 
 
