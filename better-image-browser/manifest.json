@@ -33,7 +33,6 @@
 		"persistent": false
 	},
 	"permissions": [
-		"activeTab",
 		"storage",
 		"http://*/*",
 		"https://*/*",
